@@ -23,24 +23,16 @@ public class Cube3Controller : MonoBehaviour
 
     }
 
-    // Called on pointer click
-    public void ChangeColor(BaseEventData eventData)
+    public void OnPointerClick(BaseEventData eventData)
     {
-        if (IsLeftClick(eventData as PointerEventData))
+        // Change color back and forth between original color and new color
+        if (renderer.material.color == originalColor)
         {
-            if (renderer.material.color == originalColor)
-            {
-                renderer.material.color = newColor;
-            }
-            else
-            {
-                renderer.material.color = originalColor;
-            } 
+            renderer.material.color = newColor;
         }
-    }
-
-    bool IsLeftClick(PointerEventData pointerEvent)
-    {
-        return pointerEvent != null && pointerEvent.button == PointerEventData.InputButton.Left;
+        else
+        {
+            renderer.material.color = originalColor;
+        } 
     }
 }

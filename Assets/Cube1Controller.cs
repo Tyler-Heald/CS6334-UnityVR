@@ -5,43 +5,44 @@ using UnityEngine.EventSystems;
 
 public class Cube1Controller : MonoBehaviour
 {
-    bool shouldMove;
+    public float translationUnits = 1.0f;
+
+    bool pointerIsClicked;
+    bool pointerIsOverObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        shouldMove = false;
+        pointerIsClicked = false;
+        pointerIsOverObject = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (shouldMove)
+        if (pointerIsClicked && pointerIsOverObject)
         {
-            transform.position += new Vector3(0, 0, -1 * Time.deltaTime);
+            transform.position += new Vector3(0, 0, -translationUnits * Time.deltaTime);
         }
     }
 
-    // Called on pointer down
-    public void StartTranslation(BaseEventData eventData)
+    public void OnPointerDown(BaseEventData eventData)
     {
-        if (IsLeftClick(eventData as PointerEventData))
-        {
-            shouldMove = true;
-        }
+        pointerIsClicked = true;
     }
 
-    // Called on pointer up
-    public void StopTranslation(BaseEventData eventData)
+    public void OnPointerUp(BaseEventData eventData)
     {
-        if (IsLeftClick(eventData as PointerEventData))
-        {
-            shouldMove = false;
-        }
+        pointerIsClicked = false;
     }
 
-    bool IsLeftClick(PointerEventData pointerEvent)
+    public void OnPointerEnter(BaseEventData eventData)
     {
-        return pointerEvent != null && pointerEvent.button == PointerEventData.InputButton.Left;
+        pointerIsOverObject = true;
+    }
+    
+    public void OnPointerExit(BaseEventData eventData)
+    {
+        pointerIsOverObject = false;
     }
 }
